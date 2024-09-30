@@ -25,10 +25,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen`}>
+        <header className=" bg-slate-800 h-[9%] ">asdasd</header>
         {children}
+        <footer className=" bg-slate-800 h-[7%] ">adasd</footer>
       </body>
     </html>
   );
