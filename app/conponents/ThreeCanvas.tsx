@@ -9,7 +9,7 @@ const Model = () => {
   const gltf = useLoader(GLTFLoader, "/phone.glb");
   return (
     <>
-      <primitive object={gltf.scene} scale={0.4} />
+      <primitive object={gltf.scene} scale={2} position={[-1, -2, 0]} />
     </>
   );
 };

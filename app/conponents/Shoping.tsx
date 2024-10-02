@@ -118,7 +118,8 @@ export function Shoping() {
             key={items.id}
             className="bg-white w-1/6 h-2/6 m-5 flex justify-center items-center flex-col"
           >
-            <ThreeCanvas></ThreeCanvas>
+            <div className="w-full h-4/5"></div>
+            {/* <ThreeCanvas></ThreeCanvas> */}
             <div className="w-full h-1/5 bg-zinc-700 flex justify-center items-center flex-col p-1">
               <h2 className="w-full h-1/2">{items.name}</h2>
               <div className="w-full h-1/2">{items.price}$</div>

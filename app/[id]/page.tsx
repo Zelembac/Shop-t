@@ -15,8 +15,20 @@ export default function ItemPage({ params }: any) {
   }, []);
 
   return (
-    <div className="flex items-center justify-items-center h-[84%] w-full flex-col bg-white">
-      <ThreeCanvas></ThreeCanvas>
+    <div className="flex items-center justify-items-center h-[84%] w-full flex-row bg-white">
+      <div className="w-3/6 bg-white h-full">
+        <ThreeCanvas></ThreeCanvas>
+      </div>
+      <div className="w-3/6 bg-slate-700 h-full p-3 flex items-center justify-items-center flex-col">
+        <h2>LAALALLALAasd</h2>
+        <div>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni debitis esse aperiam
+          deleniti, atque, eligendi laudantium itaque quasi mollitia enim dolore velit assumenda
+          ipsam, quis cum. Itaque fuga accusamus consequatur.
+        </div>
+
+        <div>{params.id}</div>
+      </div>
     </div>
   );
 }
