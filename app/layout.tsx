@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Image from "next/image";
+import icon from "./images/shopping-bag.png";
+import Link from "next/link";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,7 +29,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen`}>
-        <header className=" bg-slate-800 h-[9%] ">asdasd</header>
+        <header className=" bg-slate-800 h-[9%] flex justify-between items-center p-3">
+          <Link href="/">
+            <Image src={icon} width={80} height={80} alt="Picture of the author" />
+          </Link>
+          <h2>asdasd</h2>
+        </header>
         {children}
         <footer className=" bg-slate-800 h-[7%] ">adasd</footer>
       </body>
