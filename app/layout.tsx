@@ -4,6 +4,8 @@ import "./globals.css";
 import Image from "next/image";
 import icon from "./images/shopping-bag.png";
 import Link from "next/link";
+import { StoreProvider } from "./redux/StoreProvider";
+import CartIcon from "./conponents/CartIcon";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,17 +29,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen`}>
-        <header className=" bg-slate-800 h-[9%] flex justify-between items-center p-3">
-          <Link href="/">
-            <Image src={icon} width={80} height={80} alt="Picture of the author" />
-          </Link>
-          <h2>asdasd</h2>
-        </header>
-        {children}
-        <footer className=" bg-slate-800 h-[7%] ">adasd</footer>
-      </body>
-    </html>
+    <StoreProvider>
+      <html lang="en">
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen`}>
+          <header className=" bg-slate-800 h-[9%] flex justify-between items-center p-3">
+            <Link href="/">
+              <Image src={icon} width={80} height={80} alt="Picture of the author" />
+            </Link>
+
+            <CartIcon />
+          </header>
+          {children}
+          <footer className=" bg-slate-800 h-[7%] text-xl flex items-center justify-center">
+            <h2>Footer</h2>
+          </footer>
+        </body>
+      </html>
+    </StoreProvider>
   );
 }

@@ -39,14 +39,13 @@ function Box() {
 
 export function ThreeCanvas() {
   return (
-    <div className="flex  items-center justify-items-center h-4/5 w-full self-center">
-      <Canvas>
-        {/* <Box></Box> */}
-        <Model />
-        <OrbitControls />
-        <ambientLight intensity={0.1} />
-        <directionalLight position={[0, 0, 5]} color="white" />
-      </Canvas>
-    </div>
+    <Canvas>
+      {/* <Box></Box> */}
+      <Model />
+      <OrbitControls />
+      <Environment preset="sunset" background />
+      <ambientLight intensity={0.1} />
+      <directionalLight position={[0, 0, 5]} color="white" />
+    </Canvas>
   );
 }
