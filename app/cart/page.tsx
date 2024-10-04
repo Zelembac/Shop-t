@@ -11,14 +11,15 @@ export default function Cart() {
 
   function decreaseCount(items: { id: number; name: string; price: number; qty: number }) {
     if (items.qty == 1) {
-      console.log("aaaa");
       dispach(removeFromCart({ ...items }));
     } else {
       dispach(addToCart({ ...items, qty: items.qty - 1 }));
     }
   }
 
-  const { loading, cartItems, itemPrice } = useSelector((state: any) => state.cart);
+  const { loading, cartItems, itemPrice, shippingPrice, taxPrice, totalPrice } = useSelector(
+    (state: any) => state.cart
+  );
   return (
     <div className="flex items-center justify-items-center h-[84%] w-full flex-col ">
       <div className="h-5/6 w-full flex justify-start items-center flex-col p-5  ">
@@ -54,8 +55,12 @@ export default function Cart() {
             ))}
       </div>
 
-      <div className="h-1/6 w-full flex justify-center items-center ">
-        {loading ? "Loading..." : itemPrice + " $"}
+      <div className="h-1/6 w-full flex justify-center items-center flex-col">
+        <div>Shipping : {shippingPrice + " $"}</div>
+        <div>Tax : {itemPrice == 0 ? 0 + "$" : taxPrice + " $"}</div>
+        <div className="text-lg text-lime-800">
+          Total :{loading ? "Loading..." : totalPrice + " $"}
+        </div>
       </div>
     </div>
   );

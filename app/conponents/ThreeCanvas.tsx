@@ -5,11 +5,13 @@ import { useLoader } from "@react-three/fiber";
 import { Environment, OrbitControls } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
-const Model = () => {
-  const gltf = useLoader(GLTFLoader, "/phone.glb");
+const Model = (params: { id: number }) => {
+  const gltf = useLoader(GLTFLoader, "/" + params.id + ".glb");
+  console.log(params);
+
   return (
     <>
-      <primitive object={gltf.scene} scale={2} position={[-1, -2, 0]} />
+      <primitive object={gltf.scene} scale={2} position={[0, -2, 0]} />
     </>
   );
 };
@@ -37,11 +39,11 @@ function Box() {
   );
 }
 
-export function ThreeCanvas() {
+export function ThreeCanvas({ id }: any) {
   return (
     <Canvas>
       {/* <Box></Box> */}
-      <Model />
+      <Model id={id} />
       <OrbitControls />
       <Environment preset="sunset" background />
       <ambientLight intensity={0.1} />

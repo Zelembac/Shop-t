@@ -13,7 +13,7 @@ export default function ItemPage({ params }: any) {
   const { loading, cartItems } = useSelector((state: any) => state.cart);
 
   const [items, setItems] = useState([]);
-  const [item, setItem] = useState({});
+  const [item, setItem] = useState<{ name: string; price: number }>({ name: "", price: 0 });
 
   useEffect(() => {
     DataFetch().then((data) => {
@@ -29,7 +29,7 @@ export default function ItemPage({ params }: any) {
   return (
     <div className="flex items-center justify-items-center h-[84%] w-full flex-row bg-white">
       <div className="w-3/6 bg-white h-full">
-        <ThreeCanvas></ThreeCanvas>
+        <ThreeCanvas id={params.id}></ThreeCanvas>
       </div>
       <div className="w-3/6 bg-slate-700 h-full p-3 flex items-center justify-items-center flex-col">
         <h2 className="w-full h-1/6 bg-slate-900 text-2xl font-bold flex items-center justify-center text-center p-10">

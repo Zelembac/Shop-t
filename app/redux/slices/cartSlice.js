@@ -26,11 +26,16 @@ const cartSlice = createSlice({
       state.itemPrice = addDecimals(
         state.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
       );
-      state.ShippingPrice = addDecimals(state.itemPrice > 100 ? 0 : 100);
-      state.tacPrice = addDecimals(Number((0.15 * state.itemPrice).toFixed(2)));
+      if (state.itemPrice > 100 || state.itemPrice == 0) {
+        state.shippingPrice = addDecimals(0);
+      } else {
+        state.shippingPrice = addDecimals(100);
+      }
+
+      state.taxPrice = addDecimals(Number((0.15 * state.itemPrice).toFixed(2)));
       state.totalPrice = (
         Number(state.itemPrice) +
-        Number(state.ShippingPrice) +
+        Number(state.shippingPrice) +
         Number(state.taxPrice)
       ).toFixed(2);
       Cookies.set("cart", JSON.stringify(state));
@@ -40,10 +45,14 @@ const cartSlice = createSlice({
       state.itemPrice = addDecimals(
         state.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
       );
-      state.ShippingPrice = addDecimals(state.itemPrice > 100 ? 0 : 100);
-      state.tacPrice = addDecimals(Number((0.15 * state.itemPrice).toFixed(2)));
+      if (state.itemPrice > 100 || state.itemPrice == 0) {
+        state.shippingPrice = addDecimals(0);
+      } else {
+        state.shippingPrice = addDecimals(100);
+      }
+      state.taxPrice = addDecimals(Number((0.15 * state.itemPrice).toFixed(2)));
       state.totalPrice =
-        Number(state.itemPrice) + Number(state.ShippingPrice) + Number(state.taxPrice);
+        Number(state.itemPrice) + Number(state.shippingPrice) + Number(state.taxPrice);
 
       Cookies.set("cart", JSON.stringify(state));
     },

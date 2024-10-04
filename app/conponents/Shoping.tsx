@@ -16,7 +16,6 @@ export function Shoping() {
   useEffect(() => {
     dispach(hideLoading());
   }, [dispach]);
-  console.log(cartItems);
 
   const [shopingIntems, setShopingItems] = useState([{ name: "aaaaa", id: 12, price: 200 }]);
 
@@ -34,7 +33,6 @@ export function Shoping() {
   }, []);
 
   function filter() {
-    console.log("filtriram");
     let unfilteredArray = [...shopingIntems];
     let filteredArray = unfilteredArray.filter((items) =>
       items.name.toLowerCase().includes(serch.toLowerCase())
@@ -55,11 +53,10 @@ export function Shoping() {
     if (filterOrder == "Z-A") {
       filteredArray.sort((a, b) => (b.name > a.name ? 1 : -1));
     }
-    console.log(lowestPrice);
+
     let filteredArrayF = filteredArray.filter(
       (item) => item.price > lowestPrice && item.price < highestPrice
     );
-    console.log(filteredArrayF);
 
     setFilteredShopingList(filteredArrayF);
   }
