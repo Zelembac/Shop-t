@@ -41,14 +41,14 @@ export default function ItemPage({ params }: any) {
           ipsam, quis cum. Itaque fuga accusamus consequatur.
         </div>
 
-        <div className="w-full h-1/6 bg-slate-900 flex items-center justify-center p-10">
+        <div className="w-full h-1/6 bg-slate-900 flex items-center justify-between p-10">
           <div className="w-1/3 h-full flex items-center justify-center text-2xl">
             {item.price + " $"}
           </div>
 
           <button
             onClick={() => dispach(addToCart({ ...item, qty: 1 }))}
-            className="bg-neutral-800 hover:bg-neutral-600 transition w-1/3 h-full"
+            className="bg-neutral-800 hover:bg-neutral-600 hover:w-[35%] rounded hover:rounded-sm hover:h-full transition w-1/3 h-4/5"
           >
             Buy
           </button>
