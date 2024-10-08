@@ -31,7 +31,7 @@ export default function ItemPage({ params }: any) {
       <div className="w-3/6 bg-white h-full">
         <ThreeCanvas id={params.id}></ThreeCanvas>
       </div>
-      <div className="w-3/6 bg-slate-700 h-full p-3 flex items-center justify-items-center flex-col">
+      <div className="w-3/6 bg-slate-700 h-full  flex items-center justify-items-center flex-col">
         <h2 className="w-full h-1/6 bg-slate-900 text-2xl font-bold flex items-center justify-center text-center p-10">
           {item.name}
         </h2>

@@ -1,43 +1,38 @@
 "use client";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { useState, useRef } from "react";
-import { useLoader } from "@react-three/fiber";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { useRef } from "react";
 import { Environment, OrbitControls } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 const Model = (params: { id: number }) => {
   const gltf = useLoader(GLTFLoader, "/" + params.id + ".glb");
-  console.log(params);
+  console.log("a");
+
+  const meshRef = useRef<any>();
+  // Set up state for the hovered and active state
+  // const [hover, setHover] = useState(false);
+
+  useFrame((state, delta) => {
+    // if (!hover) {
+    if (meshRef.current) {
+      meshRef.current.rotation.y += delta / 10;
+    }
+    // }
+  });
 
   return (
     <>
-      <primitive object={gltf.scene} scale={2} position={[0, -2, 0]} />
+      <primitive
+        ref={meshRef}
+        object={gltf.scene}
+        scale={2}
+        position={[0, -2, 0]}
+        // onPointerOver={() => setHover(true)}
+        // onPointerOut={() => setHover(false)}
+      />
     </>
   );
 };
-
-function Box() {
-  // This reference will give us direct access to the mesh
-  const meshRef = useRef();
-  // Set up state for the hovered and active state
-  const [hovered, setHover] = useState(false);
-  const [active, setActive] = useState(false);
-  // Subscribe this component to the render-loop, rotate the mesh every frame
-  useFrame((state, delta) => (meshRef.current.rotation.y += delta));
-  // Return view, these are regular three.js elements expressed in JSX
-  return (
-    <mesh
-      ref={meshRef}
-      scale={active ? 4 : 2}
-      onClick={(event) => setActive(!active)}
-      onPointerOver={(event) => setHover(true)}
-      onPointerOut={(event) => setHover(false)}
-    >
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
-    </mesh>
-  );
-}
 
 export function ThreeCanvas({ id }: any) {
   return (

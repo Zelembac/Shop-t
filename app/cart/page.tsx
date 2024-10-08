@@ -1,6 +1,6 @@
 "use client";
 import { useDispatch, useSelector } from "react-redux";
-import cartSlice, { addToCart, hideLoading, removeFromCart } from "../redux/slices/cartSlice";
+import { addToCart, removeFromCart } from "../redux/slices/cartSlice";
 
 export default function Cart() {
   const dispach = useDispatch();

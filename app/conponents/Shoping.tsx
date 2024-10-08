@@ -1,27 +1,25 @@
 "use client";
 import { useState, useEffect } from "react";
-import { ThreeCanvas } from "./ThreeCanvas";
+
 import Link from "next/link";
 import Image from "next/image";
 import searchIcon from "../images/search.png";
 import { DataFetch } from "./DataFetch";
-import { useDispatch, useSelector } from "react-redux";
-import cartSlice, { addToCart, hideLoading } from "../redux/slices/cartSlice";
+import { useDispatch } from "react-redux";
+import { addToCart, hideLoading } from "../redux/slices/cartSlice";
 
 export function Shoping() {
   const dispach = useDispatch();
-
-  const { loading, cartItems } = useSelector((state: any) => state.cart);
 
   useEffect(() => {
     dispach(hideLoading());
   }, [dispach]);
 
-  const [shopingIntems, setShopingItems] = useState<[{ name: string; id: number; price: number }]>([
+  const [shopingItems, setShopingItems] = useState<[{ name: string; id: number; price: number }]>([
     { name: "aaaaa", id: 12, price: 200 },
   ]);
 
-  const [filteredShopingList, setFilteredShopingList] = useState([...shopingIntems]);
+  const [filteredShopingList, setFilteredShopingList] = useState([...shopingItems]);
   const [filterOrder, setFilterOrder] = useState("A-Z");
   const [lowestPrice, setLowestPrice] = useState(0);
   const [highestPrice, setHighestPrice] = useState(1000);
@@ -35,7 +33,7 @@ export function Shoping() {
   }, []);
 
   function filter() {
-    let unfilteredArray = [...shopingIntems];
+    let unfilteredArray = [...shopingItems];
     let filteredArray = unfilteredArray.filter((items) =>
       items.name.toLowerCase().includes(serch.toLowerCase())
     );
@@ -133,7 +131,12 @@ export function Shoping() {
             className="bg-white w-1/6 h-2/6  transition-all m-5 flex justify-center items-center flex-col hover:items-hover rounded"
           >
             <Link href={"/" + items.id} className="w-full h-4/5 flex items-center justify-center">
-              <Image src="/phone.png" width={200} height={290} alt="Search icon"></Image>
+              <Image
+                src={"/" + items.id + ".jpg"}
+                width={220}
+                height={220}
+                alt="Search icon"
+              ></Image>
             </Link>
             {/* <ThreeCanvas></ThreeCanvas> */}
             <div className="w-full h-1/5 bg-zinc-700 flex justify-center items-center  p-1">
