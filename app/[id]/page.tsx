@@ -4,20 +4,16 @@ import { useState, useEffect } from "react";
 
 import { DataFetch } from "../conponents/DataFetch";
 import { ThreeCanvas } from "../conponents/ThreeCanvas";
-import { useDispatch, useSelector } from "react-redux";
-import cartSlice, { addToCart, hideLoading } from "../redux/slices/cartSlice";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/slices/cartSlice";
 
 export default function ItemPage({ params }: any) {
   const dispach = useDispatch();
 
-  const { loading, cartItems } = useSelector((state: any) => state.cart);
-
-  const [items, setItems] = useState([]);
   const [item, setItem] = useState<{ name: string; price: number }>({ name: "", price: 0 });
 
   useEffect(() => {
     DataFetch().then((data) => {
-      setItems(data);
       for (const i of data) {
         if (i.id == params.id) {
           setItem(i);

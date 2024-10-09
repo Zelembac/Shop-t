@@ -31,8 +31,10 @@ export default function RootLayout({
   return (
     <StoreProvider>
       <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen`}>
-          <header className=" bg-slate-800 h-[9%] flex justify-between items-center p-3">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen font-geist-sans  bg-slate-500`}
+        >
+          <header className=" bg-slate-800 h-[9%] flex justify-between items-center p-3 ">
             <Link href="/">
               <Image src={icon} width={80} height={80} alt="Picture of the author" />
             </Link>
@@ -40,7 +42,7 @@ export default function RootLayout({
             <CartIcon />
           </header>
           {children}
-          <footer className=" bg-slate-800 h-[7%] text-xl flex items-center justify-center">
+          <footer className=" bg-slate-800 h-[7%] text-xl flex items-center justify-center ">
             <h2>Footer</h2>
           </footer>
         </body>
