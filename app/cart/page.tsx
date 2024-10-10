@@ -21,7 +21,7 @@ export default function Cart() {
     (state: any) => state.cart
   );
   return (
-    <div className="flex items-center justify-items-center h-[84%] w-full flex-col bg-slate-500 font-geist-sans text-lg">
+    <div className="flex items-center justify-items-center h-full w-full flex-col bg-slate-500 font-geist-sans text-lg">
       <div className="h-5/6 w-full flex justify-start items-center flex-col p-5  ">
         {itemPrice == 0
           ? "Cart is empty"
