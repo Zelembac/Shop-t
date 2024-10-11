@@ -1,12 +1,11 @@
 "use client";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { useRef } from "react";
+import { useRef, Suspense } from "react";
 import { Environment, OrbitControls } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 const Model = (params: { id: number }) => {
   const gltf = useLoader(GLTFLoader, "/" + params.id + ".glb");
-  console.log("a");
 
   const meshRef = useRef<any>();
   // Set up state for the hovered and active state
@@ -40,7 +39,13 @@ export function ThreeCanvas({ id }: any) {
       {/* <Box></Box> */}
       <Model id={id} />
       <OrbitControls />
-      <Environment preset="sunset" background />
+      {/* <OrbitControls minDistance={3} maxDistance={4} /> */}
+      {/* <Environment preset="sunset" background /> */}
+      <Suspense fallback={null}>
+        <Environment path="cube" />
+      </Suspense>
+      <color args={["#e2e8f0"]} attach="background" />
+
       <ambientLight intensity={0.1} />
       <directionalLight position={[0, 0, 5]} color="white" />
     </Canvas>

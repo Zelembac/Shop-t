@@ -41,7 +41,7 @@ export default function ItemPage({ params }: any) {
 
         <div className="w-full h-1/6 bg-slate-900 flex items-center justify-between p-2">
           <div className="w-1/5 h-full flex items-center justify-center text-2xl">
-            {item.price + " $"}
+            {item.price * count + " $"}
           </div>
           <div className="w-[30%] h-full flex justify-evenly items-center text-lg font-semibold">
             <button

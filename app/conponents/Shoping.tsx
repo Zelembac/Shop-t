@@ -129,7 +129,7 @@ export function Shoping() {
         {filteredShopingList.map((items) => (
           <div
             key={items.id}
-            className="bg-slate-700 w-1/6 h-[40%] transition-all m-5 flex justify-center items-center flex-col hover:items-hover rounded"
+            className="bg-slate-700 w-[16%] h-[40%] transition-all m-[1.99%] flex justify-center items-center flex-col hover:items-hover rounded"
             onMouseEnter={() => setHoverId(items.id)}
             onMouseLeave={() => setHoverId(-1)}
           >
