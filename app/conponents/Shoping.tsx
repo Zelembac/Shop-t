@@ -7,9 +7,23 @@ import searchIcon from "../images/search.png";
 import { DataFetch } from "./DataFetch";
 import { useDispatch } from "react-redux";
 import { addToCart, hideLoading } from "../redux/slices/cartSlice";
+import { createClient } from "@supabase/supabase-js";
 
 export function Shoping() {
   const dispach = useDispatch();
+
+  useEffect(() => {
+    const supabaseUrl = "https://tagpszeqcacjuyphkjjp.supabase.co";
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+    async function getData() {
+      let { data: Items, error } = await supabase.from("Items").select("*");
+      console.log(Items);
+      setShopingItems(Items);
+      setFilteredShopingList(Items);
+    }
+    getData();
+  }, []);
 
   useEffect(() => {
     dispach(hideLoading());
@@ -18,7 +32,6 @@ export function Shoping() {
   const [shopingItems, setShopingItems] = useState<[{ name: string; id: number; price: number }]>([
     { name: "aaaaa", id: 12, price: 200 },
   ]);
-
   const [filteredShopingList, setFilteredShopingList] = useState([...shopingItems]);
   const [filterOrder, setFilterOrder] = useState("A-Z");
   const [lowestPrice, setLowestPrice] = useState(0);
@@ -26,12 +39,12 @@ export function Shoping() {
   const [serch, setSerch] = useState("");
   const [hoverId, setHoverId] = useState(-1);
 
-  useEffect(() => {
-    DataFetch().then((data) => {
-      setShopingItems(data);
-      setFilteredShopingList(data);
-    });
-  }, []);
+  // useEffect(() => {
+  //   DataFetch().then((data) => {
+  //     setShopingItems(data);
+  //     setFilteredShopingList(data);
+  //   });
+  // }, []);
 
   function filter() {
     let unfilteredArray = [...shopingItems];
