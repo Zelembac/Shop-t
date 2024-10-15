@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import searchIcon from "../images/search.png";
-import { DataFetch } from "./DataFetch";
+
 import { useDispatch } from "react-redux";
 import { addToCart, hideLoading } from "../redux/slices/cartSlice";
 import { createClient } from "@supabase/supabase-js";
@@ -15,12 +15,14 @@ export function Shoping() {
   useEffect(() => {
     const supabaseUrl = "https://tagpszeqcacjuyphkjjp.supabase.co";
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY;
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    const supabase = createClient(supabaseUrl, supabaseKey as string);
     async function getData() {
       let { data: Items, error } = await supabase.from("Items").select("*");
-      console.log(Items);
-      setShopingItems(Items);
-      setFilteredShopingList(Items);
+      const defaultItem = [{ name: "aaaaa", id: 12, price: 200 }];
+      setShopingItems((Items as { name: string; id: number; price: number }[]) ?? defaultItem);
+      setFilteredShopingList(
+        (Items as { name: string; id: number; price: number }[]) ?? defaultItem
+      );
     }
     getData();
   }, []);
@@ -29,7 +31,7 @@ export function Shoping() {
     dispach(hideLoading());
   }, [dispach]);
 
-  const [shopingItems, setShopingItems] = useState<[{ name: string; id: number; price: number }]>([
+  const [shopingItems, setShopingItems] = useState<{ name: string; id: number; price: number }[]>([
     { name: "aaaaa", id: 12, price: 200 },
   ]);
   const [filteredShopingList, setFilteredShopingList] = useState([...shopingItems]);

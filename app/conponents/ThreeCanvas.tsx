@@ -35,7 +35,7 @@ const Model = (params: { id: number }) => {
 
 export function ThreeCanvas({ id }: any) {
   return (
-    <Canvas>
+    <Canvas className="rounded-lg">
       {/* <Box></Box> */}
       <Model id={id} />
       <OrbitControls />

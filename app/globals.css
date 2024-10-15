@@ -30,3 +30,24 @@ body {
     background-color: whitesmoke;
   }
 }
+
+@layer utilities {
+  .greying {
+    background-color: rgba(157, 157, 157, 0.334);
+  }
+  .short-border {
+    position: relative;
+  }
+  .short-border::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    /* Adjust this value to change the border length */
+    height: 2px;
+    background-color: #334155;
+    /* This is the color for slate-700 */
+  }
+}
