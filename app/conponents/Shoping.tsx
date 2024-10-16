@@ -8,6 +8,7 @@ import searchIcon from "../images/search.png";
 import { useDispatch } from "react-redux";
 import { addToCart, hideLoading } from "../redux/slices/cartSlice";
 import { createClient } from "@supabase/supabase-js";
+import Rating from "@mui/material/Rating";
 
 export function Shoping() {
   const dispach = useDispatch();
@@ -18,10 +19,24 @@ export function Shoping() {
     const supabase = createClient(supabaseUrl, supabaseKey as string);
     async function getData() {
       let { data: Items, error } = await supabase.from("Items").select("*");
-      const defaultItem = [{ name: "aaaaa", id: 12, price: 200 }];
-      setShopingItems((Items as { name: string; id: number; price: number }[]) ?? defaultItem);
+      const defaultItem = [{ name: "aaaaa", id: 12, price: 200, rating: 0, numberOfRatings: 0 }];
+      setShopingItems(
+        (Items as {
+          name: string;
+          id: number;
+          price: number;
+          rating: number;
+          numberOfRatings: number;
+        }[]) ?? defaultItem
+      );
       setFilteredShopingList(
-        (Items as { name: string; id: number; price: number }[]) ?? defaultItem
+        (Items as {
+          name: string;
+          id: number;
+          price: number;
+          rating: number;
+          numberOfRatings: number;
+        }[]) ?? defaultItem
       );
     }
     getData();
@@ -31,9 +46,9 @@ export function Shoping() {
     dispach(hideLoading());
   }, [dispach]);
 
-  const [shopingItems, setShopingItems] = useState<{ name: string; id: number; price: number }[]>([
-    { name: "aaaaa", id: 12, price: 200 },
-  ]);
+  const [shopingItems, setShopingItems] = useState<
+    { name: string; id: number; price: number; rating: number; numberOfRatings: number }[]
+  >([{ name: "aaaaa", id: 12, price: 200, rating: 0, numberOfRatings: 0 }]);
   const [filteredShopingList, setFilteredShopingList] = useState([...shopingItems]);
   const [filterOrder, setFilterOrder] = useState("A-Z");
   const [lowestPrice, setLowestPrice] = useState(0);
@@ -144,13 +159,13 @@ export function Shoping() {
         {filteredShopingList.map((items) => (
           <div
             key={items.id}
-            className="bg-slate-700 w-[16%] h-[40%] transition-all m-[1.99%] flex justify-center items-center flex-col hover:items-hover rounded"
+            className="bg-slate-700 w-[16%] h-[45%] transition-all m-[1.99%] flex justify-center items-center flex-col hover:items-hover rounded"
             onMouseEnter={() => setHoverId(items.id)}
             onMouseLeave={() => setHoverId(-1)}
           >
             <Link
               href={"/" + items.id}
-              className="w-full h-4/5 flex items-center transition-all justify-center z-10 bg-slate-200 hover:bg-slate-100 rounded-t "
+              className="w-full h-[75%] flex items-center transition-all justify-center z-10 bg-slate-200 hover:bg-slate-100 rounded-t "
             >
               <Image
                 src={"/" + items.id + ".png"}
@@ -160,10 +175,11 @@ export function Shoping() {
               ></Image>
             </Link>
             {/* <ThreeCanvas></ThreeCanvas> */}
-            <div className="w-full h-1/5 bg-zinc-700 flex justify-center items-center  p-1 rounded-b">
+            <div className="w-full h-[25%] bg-zinc-700 flex justify-center items-center  p-1 rounded-b">
               <div className="w-1/3 h-full flex justify-center items-center flex-col">
                 <h2 className="w-full h-1/2">{items.name}</h2>
                 <div className="w-full h-1/2">{items.price}$</div>
+                <Rating value={items.rating} readOnly size="small" precision={0.1} />
               </div>
               <div className="w-2/3 h-full flex justify-center items-center">
                 <button

@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 
 import { DataFetch } from "../conponents/DataFetch";
 import { ThreeCanvas } from "../conponents/ThreeCanvas";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/slices/cartSlice";
-import { Rating } from "react-simple-star-rating";
+import { createClient } from "@supabase/supabase-js";
+
+import Rating from "@mui/material/Rating";
 
 export default function ItemPage({ params }: any) {
   const dispach = useDispatch();
@@ -14,27 +16,42 @@ export default function ItemPage({ params }: any) {
   const [count, setCount] = useState(1);
   const [rating, setRating] = useState(0);
 
-  const [item, setItem] = useState<{ name: string; price: number }>({ name: "", price: 0 });
+  const [item, setItem] = useState<{
+    name: string;
+    price: number;
+    rating: number;
+    numberOfRatings: number;
+  }>({ name: "", price: 0, rating: 0, numberOfRatings: 0 });
 
   useEffect(() => {
-    DataFetch().then((data) => {
-      for (const i of data) {
-        if (i.id == params.id) {
-          setItem(i);
-        }
-      }
-    });
-  }, []);
+    const supabaseUrl = "https://tagpszeqcacjuyphkjjp.supabase.co";
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY;
+    const supabase = createClient(supabaseUrl, supabaseKey as string);
+    async function getData() {
+      let { data: Items1, error } = await supabase.from("Items").select("*").eq("id", params.id);
+      const defaultItem = [{ name: "aaaaa", id: 12, price: 200, rating: 0, numberOfRatings: 0 }];
+      setItem(Items1?.[0] || defaultItem);
+    }
+    getData();
+    async function handleRating(rating: number, ratingCount: number, oldRating: number) {
+      let finalRating = (rating * ratingCount + oldRating) / (ratingCount + 1);
+      const { data, error } = await supabase
+        .from("Items")
+        .update({ rating: finalRating })
+        .eq("id", params.id)
+        .select();
+      const { data: data2, error: error2 } = await supabase
+        .from("Items")
+        .update({ numberOfRatings: ratingCount + 1 })
+        .eq("id", params.id)
+        .select();
+    }
 
-  const handleRating = (rate: number) => {
-    setRating(rate);
-
-    // other logic
-  };
-  // Optinal callback functions
-  const onPointerEnter = () => console.log("Enter");
-  const onPointerLeave = () => console.log("Leave");
-  const onPointerMove = (value: number, index: number) => console.log(value, index);
+    if (rating > 0) {
+      console.log("doslo je");
+      handleRating(rating, item.numberOfRatings, item.rating);
+    }
+  }, [rating]);
 
   return (
     <div className="flex items-center justify-items-center h-[84%] w-full flex-row bg-slate-500">
@@ -54,11 +71,13 @@ export default function ItemPage({ params }: any) {
           }}
         >
           <Rating
-            onClick={handleRating}
-            onPointerEnter={onPointerEnter}
-            onPointerLeave={onPointerLeave}
-            onPointerMove={onPointerMove}
-            /* Available Props */
+            name="simple-controlled"
+            value={rating}
+            onChange={(event, newValue) => {
+              setRating(newValue ?? 0);
+            }}
+            size="large"
+            precision={0.5}
           />
         </div>
       </button>
@@ -68,9 +87,13 @@ export default function ItemPage({ params }: any) {
       <div className="w-3/6 bg-slate-700 h-full  flex items-center  justify-items-start flex-col">
         <div className="w-full h-1/6 bg-slate-500 text-2xl font-bold flex  flex-col items-start justify-center p-10">
           <h2>{item.name}</h2>
-          <button className="w-1/5 h-1/3 bg-slate-700" onClick={() => setShow(true)}>
-            {/* Add descriptive text or aria-label here */}
-          </button>
+          <div onClick={() => setShow(true)} className="cursor-pointer">
+            <Suspense fallback={<div>Loading...</div>}>
+              <Rating value={item.rating} readOnly precision={0.01}>
+                {/* Add descriptive text or aria-label here */}
+              </Rating>
+            </Suspense>
+          </div>
         </div>
 
         <div className="w-full h-4/6 bg-slate-500 flex items-start justify-center p-10">
