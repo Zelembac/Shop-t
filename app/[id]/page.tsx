@@ -55,7 +55,7 @@ export default function ItemPage({ params }: any) {
 
   return (
     <div className="flex items-center justify-items-center h-[84%] w-full flex-row bg-slate-500">
-      <button
+      <div
         className={
           show
             ? "w-full h-full greying absolute top-0 left-0 rounded z-50 flex items-center justify-center"
@@ -64,34 +64,46 @@ export default function ItemPage({ params }: any) {
         onClick={() => setShow(false)}
       >
         <div
-          className="h-2/6 w-2/6 bg-slate-500 flex items-center justify-center"
+          className="h-1/6 w-2/6 bg-slate-500 flex items-center justify-center flex-col rounded-lg"
           onClick={(e) => {
             e.stopPropagation();
             // Add any additional logic you want to execute when this button is clicked
           }}
         >
-          <Rating
-            name="simple-controlled"
-            value={rating}
-            onChange={(event, newValue) => {
-              setRating(newValue ?? 0);
-            }}
-            size="large"
-            precision={0.5}
-          />
+          <div className="w-full h-2/6 flex items-center justify-end p-2">
+            <button
+              onClick={() => setShow(false)}
+              className="font-bold text-xl text-slate-500 bg-slate-100 rounded-3xl h-2/3 w-[7%]"
+            >
+              X
+            </button>
+          </div>
+          <div className="w-full h-4/6 flex items-center justify-center">
+            <Rating
+              name="simple-controlled"
+              value={rating}
+              onChange={(event, newValue) => {
+                setRating(newValue ?? 0);
+              }}
+              size="large"
+              precision={0.5}
+            />
+          </div>
         </div>
-      </button>
+      </div>
       <div className="w-3/6  h-full rounded-lg ml-2 mt-4">
         <ThreeCanvas id={params.id}></ThreeCanvas>
       </div>
       <div className="w-3/6 bg-slate-700 h-full  flex items-center  justify-items-start flex-col">
         <div className="w-full h-1/6 bg-slate-500 text-2xl font-bold flex  flex-col items-start justify-center p-10">
           <h2>{item.name}</h2>
-          <div onClick={() => setShow(true)} className="cursor-pointer">
+          <div
+            onClick={() => setShow(true)}
+            className="cursor-pointer flex items-center justify-center flex-row"
+          >
             <Suspense fallback={<div>Loading...</div>}>
-              <Rating value={item.rating} readOnly precision={0.01}>
-                {/* Add descriptive text or aria-label here */}
-              </Rating>
+              <Rating value={item.rating} readOnly precision={0.01}></Rating>
+              <div className="text-xs font-light ml-2">{item.numberOfRatings} ratings</div>
             </Suspense>
           </div>
         </div>
